@@ -5,14 +5,16 @@
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveAutonomousCommand;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ExampleCommand;
+// import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
+// import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -26,8 +28,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
-  private final DriveCommand m_driveCommand = new DriveCommand(this.m_driveSubsystem);
-
   public final static Joystick joy1 = new Joystick(Constants.kDriverJoystickPort);
   public final static AHRS navx = new AHRS(SPI.Port.kMXP);
 
@@ -35,6 +35,11 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    m_driveSubsystem.setDefaultCommand(new DriveCommand(m_driveSubsystem, //
+    () -> 1 * joy1.getRawAxis(Constants.kArcadeDriveSpeedAxis),
+    () -> -1 * joy1.getRawAxis(Constants.kArcadeDriveTurnAxis))//
+);
   }
 
   /**
@@ -44,7 +49,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton buttonNumberFour = new JoystickButton();
+    new JoystickButton(joy1, Constants.shoot_R_ButtonNumber)
+    .whenPressed(new DriveAutonomousCommand(m_driveSubsystem, 90));
   }
 
   /**

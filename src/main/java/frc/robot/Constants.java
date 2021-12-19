@@ -16,11 +16,15 @@ public final class Constants {
 
 	public static final double maxSpeed = 0.5;
 	public static final double maxTurnSpeed = 0.05;
-	public static final double kPEncoder = 0;
+	public static final double kPEncoder = 0.0001;
 	public static final int kDriverJoystickPort = 0;
-	public static final double kIEncoder = 0;
-	public static final double kDEncoder = 0;
-	public static final double integralResetBound = 0;
+	public static final int shoot_R_ButtonNumber = 1;
+	public static final double kIEncoder = 0.00001;
+	public static final double kDEncoder = 0.0001;
+	public static final double integralResetBound = 0.2;
+	public static final int kArcadeDriveSpeedAxis = 0;
+	public static final int kArcadeDriveTurnAxis = 1;
+	public static final double turnThreshold = 0;
 
 
 }
